@@ -1,0 +1,164 @@
+---
+title: \Huge \textbf{AutoRL - Sim}
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+params:
+  data_table: ""
+  graph_data: ""
+  plot_dist: ""
+  plot_route: ""
+  plot_contour: ""
+  plot_surface: ""
+  automl: ""
+  best_value: ""
+---
+
+\bcenter
+\huge
+\vspace{-0.5cm}
+Report of the experiment with problem `r params$data_table[2,2]`
+\vspace{0.5cm}
+\ecenter
+
+\Large
+
+Date of experiment: `r format(Sys.Date(), "%d/%m/%Y")`
+
+Time of experiment: `r format(with_tz(Sys.time(), tzone = "America/Sao_Paulo"), "%H:%M:%S")` \newline
+
+```{r, echo=FALSE, eval=(params$plot_dist || automl)}
+knitr::asis_output("\\LARGE \\textbf{General results}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+```
+
+\Large
+
+```{r data, echo=FALSE, include= T, results="asis"}
+for(i in 1:nrow(params$data_table)){
+  cat(paste(params$data_table[i, 1], ": ", params$data_table[i, 2], "\n", sep=""),"\n")
+  }
+```
+
+\blandscape
+
+```{r, echo=FALSE, eval=params$plot_dist}
+knitr::asis_output("\\LARGE \\textbf{Distance Graph}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+```
+
+```{r distance, echo=FALSE, eval=params$plot_dist, fig.width=20, fig.height=13}
+if(best_value) {
+  if (params$automl) episodes <- as.numeric(params$data_table[12,2]) else episodes <- as.numeric(params$data_table[11,2])
+} else {
+  if (params$automl) episodes <- as.numeric(params$data_table[10,2]) else episodes <- as.numeric(params$data_table[9,2])
+}
+
+ggplot(data.frame(x = 1:episodes, y = params$graph_data$dist_graph),
+       aes(x = x, y = y)) +
+  geom_line(color = "steelblue", linewidth = 2) +
+  labs(x = "Episode", y = "Distance", title = paste(params$data_table[2,2], "-", params$data_table[1,2])) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 30), axis.text = element_text(size = 20), axis.title = element_text(size = 25))
+```
+
+```{r, echo=FALSE, eval=params$plot_route}
+knitr::asis_output("\\LARGE \\textbf{Route Graph}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+```
+
+```{r route, echo=FALSE, eval=params$plot_route, fig.width=20, fig.height=13}
+ggplot(data.frame(x = params$graph_data$xRoute, y = params$graph_data$yRoute), aes(x = x, y = y)) +
+  geom_path(color = "blue") +
+  geom_point(color = "blue", shape = 19, size = 5) +
+  labs(x = "Latitude", y = "Longitude", title = paste("Best found route for ", params$data_table[2,2], " - ",params$data_table[1,2],": ", params$graph_data$min_distance, sep = "")) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 30), axis.text = element_text(size = 20), axis.title = element_text(size = 25))
+```
+
+\elandscape
+
+```{r, echo=FALSE, eval=params$automl}
+knitr::asis_output("\\LARGE \\textbf{AutoML Information}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+```
+
+\Large
+
+```{r automl, echo=FALSE, eval=params$automl}
+if (params$graph_data$normal) {
+  knitr::asis_output("The residues were normal. Therefore, the parameters used were generated through the response surface methodology.")
+} else {
+  knitr::asis_output("The residues were not normal. Therefore, the parameters used were the ones that showed the best result during the initial learning phase.")
+}
+```
+
+```{r automl_normal, echo=FALSE, eval=(params$automl && params$graph_data$normal)}
+knitr::asis_output("\\vspace{0.5cm}\n")
+knitr::asis_output("\\Large \\textbf{Generated parameters}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+
+if(best_value) {
+  parameters <- paste("\n\n\nLearning rate: ", params$data_table[10,2], "\n\nDiscount Factor: ", params$data_table[9,2], sep="")
+} else {
+  parameters <- paste("\n\n\nLearning rate: ", params$data_table[8,2], "\n\nDiscount Factor: ", params$data_table[7,2], sep="")
+}
+
+knitr::asis_output(parameters)
+```
+
+```{r automlSummary, echo=FALSE, eval=params$automl}
+knitr::asis_output("\\vspace{0.5cm}\n")
+knitr::asis_output("\\Large \\textbf{Summary}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+
+knitr::asis_output("\\large")
+print(params$graph_data$model_summary)
+```
+
+\newpage
+
+```{r automlAnova, echo=FALSE, eval=params$automl}
+knitr::asis_output("\\vspace{0.5cm}\n")
+knitr::asis_output("\\Large \\textbf{Anova}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+
+knitr::asis_output("\\large")
+print(params$graph_data$anova_data)
+```
+
+```{r automlKS, echo=FALSE, eval=params$automl}
+knitr::asis_output("\\vspace{0.5cm}\n")
+knitr::asis_output("\\Large \\textbf{Kolmogorov-Smirnov test}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+
+knitr::asis_output("\\large")
+print(params$graph_data$pks)
+```
+
+\newpage
+
+```{r, echo=FALSE, eval=params$plot_contour}
+knitr::asis_output("\\LARGE \\textbf{Contour Graph}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+```
+
+```{r contour, echo=FALSE, eval=params$plot_contour, fig.width=15, fig.height=15}
+par(mar = c(5, 5, 1, 1)) #bottom, left, top, right
+suppressWarnings({
+  contour(params$graph_data$model, Gamma ~ Alpha, image=TRUE, img.col = rainbow(100),cex.lab = 2, cex.axis=2, labcex=2, xlabs = c("Learning Rate", "Discount Factor"))
+})
+```
+
+\newpage
+
+```{r, echo=FALSE, eval=params$plot_surface}
+knitr::asis_output("\\LARGE \\textbf{Surface Graph}")
+knitr::asis_output("\\vspace{0.5cm}\n")
+```
+
+```{r surface, echo=FALSE, eval=params$plot_surface, fig.width=30, fig.height=30}
+persp(params$graph_data$model,~Alpha+Gamma, col=rainbow(100),theta = 30, phi = 35, contours = list(z="top", col="blue"), cex.lab = 4,cex.axis = 4, zlab = "Distance", xlabs = c("Learning Rate", "Discount Factor"))
+
+```
