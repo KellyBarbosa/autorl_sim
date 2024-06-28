@@ -18,7 +18,7 @@ sop_automl <- function(input, output, session){
     
     show_loading_modal(FALSE)
     
-    sop_data_automl$episodios <- result$episodios
+    sop_data_automl$episodes <- result$episodes
     sop_data_automl$dist_graph <- result$dist_graph
     sop_data_automl$alpha <- result$alpha
     sop_data_automl$gamma <- result$gamma
@@ -27,7 +27,7 @@ sop_automl <- function(input, output, session){
     sop_data_automl$avg_distance <- result$avg_distance
     sop_data_automl$ep_dist_min <- result$ep_dist_min
     sop_data_automl$epoch_min_dist <- result$epoch_min_dist
-    sop_data_automl$epocas <- result$epocas
+    sop_data_automl$epochs <- result$epochs
     sop_data_automl$model <- result$model
     sop_data_automl$time <- result$time
     sop_data_automl$units <- result$units
@@ -39,7 +39,7 @@ sop_automl <- function(input, output, session){
     
     # Distance Graph
     output$distance_graph_sop_automl <- renderPlot({
-      plot_dist_graph(sop_data_automl$dist_graph, sop_data_automl$episodios, input_automl[1], "SOP") +
+      plot_dist_graph(sop_data_automl$dist_graph, sop_data_automl$episodes, input_automl[1], "SOP") +
         coord_cartesian(xlim = dist_sop_ranges_automl$x, ylim = dist_sop_ranges_automl$y, expand = FALSE)
     }, res = 100)
     
@@ -60,7 +60,7 @@ sop_automl <- function(input, output, session){
         paste("distance_graph_", input_automl[1], "_automl.pdf", sep = "")
       },
       content = function(file) {
-        ggsave(file, plot = plot_dist_graph(sop_data_automl$dist_graph, sop_data_automl$episodios, input_automl[1], "SOP"),
+        ggsave(file, plot = plot_dist_graph(sop_data_automl$dist_graph, sop_data_automl$episodes, input_automl[1], "SOP"),
                device = "pdf")
       }
     )
@@ -70,7 +70,7 @@ sop_automl <- function(input, output, session){
         paste("distance_graph_clipping_", input_automl[1], "_automl.pdf", sep = "")
       },
       content = function(file) {
-        ggsave(file, plot = plot_dist_graph(sop_data_automl$dist_graph, sop_data_automl$episodios, input_automl[1], "SOP") + 
+        ggsave(file, plot = plot_dist_graph(sop_data_automl$dist_graph, sop_data_automl$episodes, input_automl[1], "SOP") + 
                  coord_cartesian(xlim = dist_sop_ranges_automl$x, ylim = dist_sop_ranges_automl$y, expand = FALSE),
                device = "pdf")
       }
@@ -102,8 +102,8 @@ sop_automl <- function(input, output, session){
       gamma_sop_automl = paste("Discount factor:", round(sop_data_automl$gamma, 2)),
       alpha_sop_automl = paste("Learning rate:", round(sop_data_automl$alpha, 2)),
       e_greedy_sop_automl = paste("E-greedy policy:", sop_data_automl$e_greedy),
-      episodes_sop_automl = paste("Number of episodes:", sop_data_automl$episodios),
-      epochs_sop_automl = paste("Number of epochs:", sop_data_automl$epocas),
+      episodes_sop_automl = paste("Number of episodes:", sop_data_automl$episodes),
+      epochs_sop_automl = paste("Number of epochs:", sop_data_automl$epochs),
       tsplib_sop_automl = paste("Optimal distance presented by TSPLIB:", best_tsplib),
       error_sop_automl = paste("Percentage relative error: ", round(relative_error(best_tsplib, sop_data_automl$min_distance), 2), "%", sep = ""),
       time_sop_automl = paste("Runtime:", round(sop_data_automl$time, 2), sop_data_automl$units)
@@ -159,8 +159,8 @@ sop_automl <- function(input, output, session){
       round(sop_data_automl$gamma, 2),
       round(sop_data_automl$alpha, 2),
       sop_data_automl$e_greedy,
-      sop_data_automl$episodios,
-      sop_data_automl$epocas,
+      sop_data_automl$episodes,
+      sop_data_automl$epochs,
       paste(round(sop_data_automl$time, 2), sop_data_automl$units)
     )
     

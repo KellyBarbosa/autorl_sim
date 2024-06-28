@@ -207,7 +207,7 @@ tsp_atsp_sop_user_automl <- function(input, output, session){
           e_greedy_user_automl = paste("E-greedy policy:", user_data_automl$e_greedy),
           episodes_user_automl = paste("Number of episodes:", user_data_automl$episodes),
           epochs_user_automl = paste("Number of epochs:", user_data_automl$epochs),
-          otimo_user_automl = paste("Optimal distance:", inputs[3]),
+          optimal_user_automl = paste("Optimal distance:", inputs[3]),
           error_user_automl = paste("Percentage relative error: ", round(relative_error(as.numeric(inputs[3]), user_data_automl$min_distance), 2), "%", sep = ""),
           time_user_automl = paste("Runtime:", round(user_data_automl$time, 2), user_data_automl$units)
         )

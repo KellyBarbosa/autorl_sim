@@ -179,7 +179,7 @@ tsp_atsp_sop_user <- function(input, output, session){
           alpha_user = paste("Learning rate:", inputs[2]),
           e_greedy_user = paste("E-greedy policy:", inputs[4]),
           episodes_user = paste("Number of episodes:", inputs[5]),
-          otimo_user = paste("Optimal distance:", inputs[7]),
+          optimal_user = paste("Optimal distance:", inputs[7]),
           error_user = paste("Percentage relative error: ", round(relative_error(as.numeric(inputs[7]), user_data$min_distance), 2), "%", sep = ""),
           time_user = paste("Runtime:", round(user_data$time, 2), user_data$units)
         )

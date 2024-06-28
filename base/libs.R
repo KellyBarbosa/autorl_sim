@@ -1,6 +1,6 @@
 # Libraries
 
-libs <- c("shiny", "ggplot2", "shinyjs", "shinythemes", "rsm", "knitr", "lubridate", "kableExtra")
+libs <- c("shiny", "ggplot2", "shinyjs", "shinythemes", "rsm", "knitr", "lubridate")
 
 for(lib in libs){
   if(!require(lib, character.only = TRUE)){
@@ -9,6 +9,6 @@ for(lib in libs){
   }
 }
 
-if (!requireNamespace("tinytex", quietly = TRUE)){
+if (!(tinytex::is_tinytex())){
   tinytex::install_tinytex()
 }
