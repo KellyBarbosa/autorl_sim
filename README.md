@@ -8,13 +8,34 @@ AutoRL - Sim (Automated Reinforcement Learning - Simulation) is a simulation env
 
 > Gleice Kelly Barbosa Souza <br> _Robotics and Artificial Intelligence (RAI)_ <br> _Universidade Federal do Recôncavo da Bahia (UFRB)_
 >
-> [Currículo Lattes](http://lattes.cnpq.br/7270522970235184) | [E-mail](kelly.189@hotmail.com) | [ORCID](https://orcid.org/0009-0001-3679-3298)
+> [Currículo Lattes](http://lattes.cnpq.br/7270522970235184) | [E-mail](mailto:kelly.189@hotmail.com) | [ORCID](https://orcid.org/0009-0001-3679-3298)
 
 #### Advisor
 
-> André Luiz Carvalho Ottoni <br> _Robotics and Artificial Intelligence (RAI)_ <br> _Universidade Federal do Recôncavo da Bahia (UFRB)_
+> André Luiz Carvalho Ottoni <br> _Robotics and Artificial Intelligence (RAI)_ <br> _Universidade Federal de Ouro Preto (UFOP)_
 >
-> [Currículo Lattes](http://lattes.cnpq.br/2003401420560517) | [E-mail](andre.ottoni@ufrb.edu.br) | [ORCID](https://orcid.org/0000-0003-2136-9870)
+> [Currículo Lattes](http://lattes.cnpq.br/2003401420560517) | [E-mail](mailto:andre.ottoni@ufop.edu.br) | [ORCID](https://orcid.org/0000-0003-2136-9870)
+
+## Published article
+
+The article on AutoRL - Sim was published in MDPI's Modelling magazine and can be accessed via [this link](https://www.mdpi.com/2673-3951/5/3/55).
+
+If AutoRL - Sim is useful for your research and you wish to cite it, use the following reference in BibTeX format:
+
+```
+@Article{autorl_sim_2024,
+AUTHOR = {Souza, Gleice Kelly Barbosa and Ottoni, André Luiz Carvalho},
+TITLE = {AutoRL-Sim: Automated Reinforcement Learning Simulator for Combinatorial Optimization Problems},
+JOURNAL = {Modelling},
+VOLUME = {5},
+YEAR = {2024},
+NUMBER = {3},
+PAGES = {1056--1083},
+URL = {https://www.mdpi.com/2673-3951/5/3/55},
+ISSN = {2673-3951},
+DOI = {10.3390/modelling5030055}
+}
+```
 
 ## Combinatorial optimization problems covered by AutoRL - Sim
 
